@@ -20,16 +20,13 @@ class Spite {
                 x: this.position.x,
                 y: this.position.y,
             },
-            // offset: offset {
-            //     x: this.position.x,
-            //     y: this.position.y,
-            // },
             offset,
             width: 100,
             height: 50,
         }
         this.color = color;
         this.isAttacking;
+        this.health = 100;
     }
 
     draw(){
@@ -37,7 +34,7 @@ class Spite {
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
 
         // attackbox 
-        // if(this.isAttacking){
+        if(this.isAttacking){
             c.fillStyle = 'green';
             c.fillRect(
                 this.attackBox.position.x, 
@@ -45,7 +42,7 @@ class Spite {
                 this.attackBox.width, 
                 this.attackBox.height,
             )
-        // }
+        }
     }
 
     update(){
@@ -169,8 +166,21 @@ function animate(){
     }) && player.isAttacking
     ){
         player.isAttacking = false;
-        console.log('smash!');
+        // console.log('player smash!');
+        enemy.health -= 20;
+        document.querySelector('#enemyHealth').style.width = enemy.health + '%';
     }
+    if(rectangularCollision({
+        rectangle1: enemy,
+        rectangle2: player,
+    }) && enemy.isAttacking
+    ){
+        enemy.isAttacking = false;
+        // console.log('enemy smash!');
+        player.health -= 20;
+        document.querySelector('#playerHealth').style.width = player.health + '%';
+    }
+
     // if( player.attackBox.position.x + player.attackBox.width >= 
     //     enemy.position.x && player.attackBox.position.x <= 
     //     enemy.position.x + enemy.width && player.attackBox.position.y + player.attackBox.height >= 
@@ -197,7 +207,7 @@ window.addEventListener('keydown', (event) => {
         case 'w' : 
             player.velocity.y = -20; 
             break;
-        case 'e' : 
+        case 's' : 
             player.attack();
             break;
 
@@ -212,8 +222,11 @@ window.addEventListener('keydown', (event) => {
         case 'ArrowUp' : 
             enemy.velocity.y = -20; 
             break;
+        case 'ArrowDown' : 
+            enemy.attack();
+        break;
     }
-    console.log(event.key);
+    // console.log(event.key);
 })
 
 window.addEventListener('keyup', (event) => {
@@ -230,6 +243,6 @@ window.addEventListener('keyup', (event) => {
         case 'ArrowRight' : keys.ArrowRight.pressed = false; break;
         case 'ArrowUp' : keys.ArrowUp.pressed = false; break;
     }
-    console.log(event.key);
+    // console.log(event.key);
 })
 
