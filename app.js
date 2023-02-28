@@ -8,66 +8,6 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 
 const gravity = 0.7;
 
-class Spite {
-    constructor({position, velocity, color = 'red', offset}){
-        this.position = position;
-        this.velocity = velocity;
-        this.width = 50;
-        this.height = 150;
-        this.lastKey;
-        this.attackBox = {
-            position: {
-                x: this.position.x,
-                y: this.position.y,
-            },
-            offset,
-            width: 100,
-            height: 50,
-        }
-        this.color = color;
-        this.isAttacking;
-        this.health = 100;
-    }
-
-    draw(){
-        c.fillStyle = this.color;
-        c.fillRect(this.position.x, this.position.y, this.width, this.height);
-
-        // attackbox 
-        if(this.isAttacking){
-            c.fillStyle = 'green';
-            c.fillRect(
-                this.attackBox.position.x, 
-                this.attackBox.position.y, 
-                this.attackBox.width, 
-                this.attackBox.height,
-            )
-        }
-    }
-
-    update(){
-        this.draw();
-        this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
-        this.attackBox.position.y = this.position.y;
-        // this.velocity.y += gravity;
-        this.position.x += this.velocity.x;
-        this.position.y += this.velocity.y;
-
-        if(this.position.y + this.height + this.velocity.y >= canvas.height) {
-            this.velocity.y = 0;
-        }
-        else {
-            this.velocity.y += gravity;
-        }
-    }
-
-    attack(){
-        this.isAttacking = true;
-        setTimeout(() => {
-            this.isAttacking = false;
-        }, 100);
-    }
-}
 
 const player = new Spite({
     position: {
@@ -134,6 +74,40 @@ function rectangularCollision({rectangle1, rectangle2}){
     )
 }
 
+let timer = 60;
+let timerId;
+function decreaseTimer(){
+    if(timer > 0){
+        timerId = setTimeout(decreaseTimer, 1000)
+        timer -- ;
+        document.querySelector('#timer').innerHTML = timer;
+    }
+    if(timer == 0){
+        winner({player, enemy, timerId});
+    }
+}
+decreaseTimer();
+
+function winner({player, enemy, timerId}){
+    clearTimeout(timerId);
+    document.querySelector('#DisplayResult').style.display = 'flex';
+    document.querySelector('#Reset').style.display = 'flex';
+    if(player.health === enemy.health){
+        document.querySelector('#DisplayResult').innerHTML = 'Tie';
+    }
+    else if(player.health > enemy.health){
+        document.querySelector('#DisplayResult').innerHTML = 'Player 1 Winner';
+    }
+    else if(player.health < enemy.health){
+        document.querySelector('#DisplayResult').innerHTML = 'Player 2 Winner';
+    }
+}
+
+const button = document.querySelector('#ResetButton');
+button.addEventListener('click', function() {
+  location.reload();
+});
+
 function animate(){
     window.requestAnimationFrame(animate);
     c.fillStyle = 'black';
@@ -181,16 +155,10 @@ function animate(){
         document.querySelector('#playerHealth').style.width = player.health + '%';
     }
 
-    // if( player.attackBox.position.x + player.attackBox.width >= 
-    //     enemy.position.x && player.attackBox.position.x <= 
-    //     enemy.position.x + enemy.width && player.attackBox.position.y + player.attackBox.height >= 
-    //     enemy.position.y && player.attackBox.position.y <= enemy.position.y + enemy.height &&
-    //     player.isAttacking
-    // ){
-    //     player.isAttacking = false;
-    //     console.log('smash!');
-    // }
-
+    //base game over on health
+    if(enemy.health <= 0 || player.health <= 0){
+        winner({player, enemy, timerId})
+    }
 }
 animate();
 
