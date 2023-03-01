@@ -1,9 +1,11 @@
-class Spite {
-    constructor({position, velocity, color = 'red', offset}){
+class Sprite {
+    constructor({position, velocity, color = 'red', offset, imageSrc}){
         this.position = position;
         // this.velocity = velocity;
         this.width = 50;
         this.height = 150;
+        this.image = new Image();
+        this.image.src = imageSrc;
         // this.lastKey;
         // this.attackBox = {
         //     position: {
@@ -20,6 +22,7 @@ class Spite {
     }
 
     draw(){
+        c.drawImage(this.image, this.position.x, this.position.y);
         // c.fillStyle = this.color;
         // c.fillRect(this.position.x, this.position.y, this.width, this.height);
 
@@ -103,7 +106,7 @@ class Fighter {
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
-        if(this.position.y + this.height + this.velocity.y >= canvas.height) {
+        if(this.position.y + this.height + this.velocity.y >= canvas.height - 97) {
             this.velocity.y = 0;
         }
         else {
