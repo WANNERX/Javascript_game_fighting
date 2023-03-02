@@ -7,6 +7,21 @@ function rectangularCollision({rectangle1, rectangle2}){
     )
 }
 
+function winner({player, enemy, timerId}){
+    clearTimeout(timerId);
+    document.querySelector('#DisplayResult').style.display = 'flex';
+    document.querySelector('#Reset').style.display = 'flex';
+    if(player.health === enemy.health){
+        document.querySelector('#DisplayResult').innerHTML = 'Tie';
+    }
+    else if(player.health > enemy.health){
+        document.querySelector('#DisplayResult').innerHTML = 'Player 1 Winner';
+    }
+    else if(player.health < enemy.health){
+        document.querySelector('#DisplayResult').innerHTML = 'Player 2 Winner';
+    }
+}
+
 let timer = 60;
 let timerId;
 function decreaseTimer(){
