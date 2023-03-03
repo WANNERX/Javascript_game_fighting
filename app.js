@@ -341,3 +341,28 @@ window.addEventListener('keyup', (event) => {
     }
     // console.log(event.key);
 })
+
+const game = {
+    started: false,
+}
+
+// const button = document.querySelector('#ResetButton');
+// button.addEventListener('click', function() {
+//     location.reload();
+// });
+
+document.querySelector('#ResetButton').addEventListener('click', function() {
+    location.reload();
+});
+
+document.querySelector('#beginButton').addEventListener('click', () => {
+    document.querySelector('#beginButton').style.display = 'none'
+    document.querySelector('#tutorial').style.display = 'flex'
+  });
+ 
+document.querySelector('#startButton').addEventListener('click', () => {
+    document.querySelector('#tutorial').style.display = 'none'
+    game.started = true;
+    animate();
+    decreaseTimer();
+});

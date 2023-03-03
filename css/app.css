@@ -7,10 +7,14 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: black;
 }
 #main {
     position: relative; 
     display: inline-block;
+    border:10px solid white; 
+    border-radius: 10px;
+    margin-top: 50px;
 }
 
 #b-time{
@@ -80,6 +84,10 @@ body {
 
 #about {
     text-align: center;
+    border:3px solid white; 
+    border-radius: 10px;
+    width: 45%;
+    color: white;;
 }
 
 #tutorial {
