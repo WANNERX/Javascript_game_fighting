@@ -171,19 +171,14 @@ const keys = {
     // }
 }
 
-decreaseTimer();
-
-const button = document.querySelector('#ResetButton');
-button.addEventListener('click', function() {
-  location.reload();
-});
-
 function animate(){
     window.requestAnimationFrame(animate);
     c.fillStyle = 'black';
     c.fillRect(0, 0, canvas.width, canvas.height);
     background.update();
     shop.update();
+    c.fillStyle = 'rgba(255, 255, 255, 0.15)'
+    c.fillRect(0, 0, canvas.width, canvas.height)
     player.update();
     enemy.update();
     player.velocity.x = 0;
@@ -271,10 +266,16 @@ function animate(){
 
     //base game over on health
     if(enemy.health <= 0 || player.health <= 0){
-        winner({player, enemy, timerId})
+        winner({player, enemy, timerId});
     }
 }
-animate();
+
+function backgroundShop(){
+    window.requestAnimationFrame(backgroundShop);
+    background.update();
+    shop.update();
+}
+backgroundShop();
 
 window.addEventListener('keydown', (event) => {
     if(!player.dead){
@@ -340,4 +341,3 @@ window.addEventListener('keyup', (event) => {
     }
     // console.log(event.key);
 })
-
