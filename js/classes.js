@@ -9,7 +9,7 @@ class Sprite {
         this.framesMax = framesMax;
         this.framesCurrent = 0;
         this.framesElapsed = 0;
-        this.framesHold = 10;
+        this.framesHold = 20;
         this.offset = offset;
     }
 
@@ -103,14 +103,20 @@ class Fighter extends Sprite {
     attack(){
         this.isAttacking = true;
         this.switchSprite('attack1');
+        const audio = new Audio('/sound/Attack2.wav');
+        audio.play();
     }
     takeHit() {
         this.health -= 5;
         if (this.health <= 0) {
             this.switchSprite('death');
+            const audio = new Audio('/sound/Dead.mp3');
+            audio.play();
         } 
         else {
             this.switchSprite('takeHit');
+            const audio = new Audio('/sound/TakeHit.wav');
+            audio.play();
         }
     }
 
@@ -148,6 +154,8 @@ class Fighter extends Sprite {
                 this.image = this.sprites.run.image;
                 this.framesMax = this.sprites.run.framesMax;
                 this.framesCurrent = 0;
+                // const audio = new Audio('/sound/Run1.mp3');
+                // audio.play();
             }
                 break;
             case 'jump':

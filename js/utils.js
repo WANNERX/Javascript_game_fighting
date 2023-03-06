@@ -7,19 +7,29 @@ function rectangularCollision({rectangle1, rectangle2}){
     )
 }
 
+let hasAudioPlayed = false;
+
 function winner({player, enemy, timerId}){
+    const audio = new Audio('/sound/Winner.mp3');
+    const tie = new Audio('/sound/Tie.mp3');
     clearTimeout(timerId);
     document.querySelector('#DisplayResult').style.display = 'flex';
     document.querySelector('#Reset').style.display = 'flex';
     if(player.health === enemy.health){
         document.querySelector('#DisplayResult').innerHTML = 'Tie';
+        tie.play();
     }
-    else if(player.health > enemy.health){
+    else if(player.health > enemy.health && !hasAudioPlayed){
         document.querySelector('#DisplayResult').innerHTML = 'Player 1 Winner';
+        audio.play();
+        hasAudioPlayed = true;
     }
-    else if(player.health < enemy.health){
+    else if(player.health < enemy.health && !hasAudioPlayed){
         document.querySelector('#DisplayResult').innerHTML = 'Player 2 Winner';
+        audio.play();
+        hasAudioPlayed = true;
     }
+    
 }
 
 let timer = 60;
