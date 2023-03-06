@@ -6,7 +6,7 @@ canvas.height = 576;
 
 c.fillRect(0, 0, canvas.width, canvas.height);
 
-const audio = new Audio('/sound/Run1.mp3');
+// const audio = new Audio('/sound/Run1.mp3');
 
 const gravity = 0.7;
 const background = new Sprite({
@@ -289,13 +289,12 @@ window.addEventListener('keydown', (event) => {
         case 'a' : 
             keys.a.pressed = true; 
             player.lastKey = 'a'; 
-            
-            audio.play();
+            // audio.play();
             break;
         case 'd' : 
             keys.d.pressed = true; 
             player.lastKey = 'd'; 
-            audio.play();
+            // audio.play();
             break;
         case 'w' : 
             if (player.velocity.y === 0) {
