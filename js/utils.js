@@ -10,8 +10,8 @@ function rectangularCollision({rectangle1, rectangle2}){
 let hasAudioPlayed = false;
 
 function winner({player, enemy, timerId}){
-    const audio = new Audio('/sound/Winner.mp3');
-    const tie = new Audio('/sound/Tie.mp3');
+    const audio = new Audio('../sound/Winner.mp3');
+    const tie = new Audio('../sound/Tie.mp3');
     clearTimeout(timerId);
     document.querySelector('#DisplayResult').style.display = 'flex';
     document.querySelector('#Reset').style.display = 'flex';
